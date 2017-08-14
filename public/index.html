@@ -16,8 +16,13 @@
 	</div>
 
 	<div id="todo">
-		<form onsubmit=""></form>
 		A Todo List
+		<form onsubmit="app.controllers.todoController.addTodoFromForm(event)">
+			<input type="text" name="addTodo" placeholder="todo text here">
+		</form>
+		<div id="todo-list">
+			
+		</div>
 	</div>
 
 

@@ -9,31 +9,50 @@ function TodoController() {
 	var todoService = new TodoService()
 
 	// Use this getTodos function as your callback for all other edits
-	function getTodos(){
+	function getTodos() {
 		//FYI DONT EDIT ME :)
 		todoService.getTodos(draw)
 	}
 
 	function draw(todos) {
+	
 		//WHAT IS MY PURPOSE?
 		//BUILD YOUR TODO TEMPLATE HERE
-		var template = ''
+
+		var todoElem = document.getElementById('todo-list')
+		var template = '<ul>'
 		//DONT FORGET TO LOOP
+		for (var i = 0; i < todos.length; i++) {
+			var todo = todos[i];
+			template += `
+			<li>Whats next? ${todo.currentTask} 
+			<button type="button" onclick="app.controllers.todoController.removeTodo('${todo._id}')">Exterminate!</button>
+			<button type="button" onclick="app.controllers.todoController.toggleTodo('${todo._id}')">Explain Yourself!</button>
+			`
+		}
+		template += '</ul>'
+		todoElem.innerHTML = template
+		console.log(template)
 	}
 
 	this.addTodoFromForm = function (e) {
 		e.preventDefault() // <-- hey this time its a freebie don't forget this
 		// TAKE THE INFORMATION FORM THE FORM
-		var form = e.target
+
+		var form = e.target.addTodo.value
+
 		var todo = {
 			// DONT FORGET TO BUILD YOUR TODO OBJECT
-		}
+			currentTask: form
 
+
+		}
+		console.log(todo)
 		//PASSES THE NEW TODO TO YOUR SERVICE
 		//DON'T FORGET TO REDRAW THE SCREEN WITH THE NEW TODO
 		//YOU SHOULDN'T NEED TO CHANGE THIS
 		todoService.addTodo(todo, getTodos)
-		                         //^^^^^^^ EXAMPLE OF HOW TO GET YOUR TOODOS AFTER AN EDIT
+		//^^^^^^^ EXAMPLE OF HOW TO GET YOUR TOODOS AFTER AN EDIT
 	}
 
 	this.toggleTodoStatus = function (todoId) {
@@ -44,10 +63,10 @@ function TodoController() {
 
 	this.removeTodo = function (todoId) {
 		// ask the service to run the remove todo with this id
-
+		todoService.removeTodo(todoId, getTodos)
 		// ^^^^ THIS LINE OF CODE PROBABLY LOOKS VERY SIMILAR TO THE toggleTodoStatus
 	}
 
 	// IF YOU WANT YOUR TODO LIST TO DRAW WHEN THE PAGE FIRST LOADS WHAT SHOULD YOU CALL HERE???
-
+	getTodos()
 }
