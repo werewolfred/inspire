@@ -16,18 +16,36 @@ function TodoController() {
 		//WHAT IS MY PURPOSE?
 		//BUILD YOUR TODO TEMPLATE HERE
 		var todoElem = document.getElementById('todo-list')
+		var countElem = document.getElementById('count')
 		var template = '<ul>'
 		//DONT FORGET TO LOOP
+		count = 0
 		for (var i = 0; i < todos.length; i++) {
 			var todo = todos[i];
-			template += `
+			if (todos[i].completed == false) {
+				count++
+			}
+			if (todo.completed == true) {
+				template += `
 			<li>Whats next? ${todo.currentTask} </li>
 			<button type="button" onclick="app.controllers.todoController.removeTodo('${todo._id}')">Exterminate!</button>
-			<button type="button" onclick="app.controllers.todoController.toggleTodoStatus('${todo._id}')">Completed!</button>
+			<button type="checkbox" onclick="app.controllers.todoController.toggleTodoStatus('${todo._id}')">Completed!</button>
+			<input type="checkbox" checked="checked" onchange="app.controllers.todoController.toggleTodoStatus('${todo._id}')" ${todo.completed}>
 			`
+
+			} else {
+				template += `
+			<li>Whats next? ${todo.currentTask} </li>
+			<button type="button" onclick="app.controllers.todoController.removeTodo('${todo._id}')">Exterminate!</button>
+			<button type="checkbox" onclick="app.controllers.todoController.toggleTodoStatus('${todo._id}')">Completed!</button>
+			<input type="checkbox" onchange="app.controllers.todoController.toggleTodoStatus('${todo._id}')" ${todo.completed}>
+			`
+			}
 		}
 		template += '</ul>'
 		todoElem.innerHTML = template
+		countElem.innerHTML = count
+		console.log(count)
 	}
 	this.addTodoFromForm = function (e) {
 		e.preventDefault() // <-- hey this time its a freebie don't forget this
@@ -47,6 +65,7 @@ function TodoController() {
 		// asks the service to edit the todo status
 		todoService.toggleTodoStatus(todoId, getTodos)
 		// YEP THATS IT FOR ME
+		console.log(todo.completed)
 	}
 	this.removeTodo = function (todoId) {
 		// ask the service to run the remove todo with this id

@@ -1,0 +1,14 @@
+body{
+    background-size: cover;
+    position: center center fixed;
+    height: 100%;
+}
+#todo{
+    color: cyan
+}
+#quote{
+    color: greenyellow
+}
+#weather{
+    color:orange
+}
