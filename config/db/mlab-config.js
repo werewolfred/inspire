@@ -4,7 +4,7 @@ var connection = mongoose.connection
 
 
 
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds013881.mlab.com:13881/inspireaustin', {
+mongoose.connect('mongodb://student:student@ds013881.mlab.com:13881/inspireaustin', {
   server:{socketOptions:{keepAlive: 300000, connectTimeoutMS: 30000}},
   replset:{socketOptions:{keepAlive: 300000, connectTimeoutMS: 30000}},
 })

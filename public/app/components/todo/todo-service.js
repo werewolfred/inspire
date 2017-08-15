@@ -13,7 +13,9 @@ function TodoService() {
 		$.get('/api/todos')
 			.then((todos) => {
 				todoList = todos // <-- WHY IS THIS IMPORTANT????
-				draw(todoList) // <-- WHERE DOES THIS DRAW FUNCTION COME FROM???
+				draw(todoList)
+				console.log(todoList)
+				// <-- WHERE DOES THIS DRAW FUNCTION COME FROM???
 			})
 			.fail(logError)
 	}
@@ -28,7 +30,7 @@ function TodoService() {
 
 	this.toggleTodoStatus = function (todoId, getTodos) {
 		// MAKE SURE WE THINK THIS ONE THROUGH
-		var todo = {}
+	
 		//STEP 1: Find the todo by its id **HINT** todoList
 		todo = todoList.find(todo => todo._id == todoId)
 		//STEP 2: Change the completed flag to the opposite of what is is **HINT** todo.completed = !todo.completed
@@ -48,17 +50,24 @@ function TodoService() {
 	}
 
 	this.removeTodo = function (todoId, getTodos) {
+	
 		// Umm this one is on you.... It's also a unique snowflake the method is a DELETE
 		$.ajax({
-			contentType: 'apllication/json',
+			contentType: 'application/json',
 			method: 'DELETE',
-			url: '/api/todos' + todoId
+			url: '/api/todos/' + todoId
 		})
-			.then(getTodos)
+	
+			.then((message) =>{
+				getTodos()
+				console.log(getTodos)
+			})
 			.fail(logError)
 	}
 
-
+	this.updatedTodo = function(todoId, getTodos){
+		
+	}
 
 	// I KNOW LOTS OF CODE RIGHT
 

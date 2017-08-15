@@ -11,7 +11,7 @@ var todoSchema = new mongoose.Schema({
 var Todos = mongoose.model('todo', todoSchema)
 
 router.get('/', function (req, res, next) {
-    Todo.find({})
+    Todos.find({})
         .then((todos) => {
             res.send(todos)
         })
@@ -24,12 +24,21 @@ router.post('/', function (req, res, next) {
         })
         .catch(next)
 })
-router.delete('/:todoId', (erq, res, next) => {
+router.put('/:todoId', (req, res, next) => {
     var todoId = req.params.todoId
-    var updateTodoObj = req.body
+    var updatedTodoObj = req.body
     Todos.findByIdAndUpdate(todoId, updatedTodoObj)
         .then(todo => {
-            res.send({ message: 'successfully updated Todo' })
+            res.send({ message: 'Successfully Updated Book' })
+        })
+        .catch(next)
+})
+
+router.delete('/:todoId', (req, res, next) => {
+    var todoId = req.params.todoId
+    Todos.findByIdAndRemove(todoId)
+        .then(todo => {
+            res.send({ message: 'Successfully Deleted and Updated' })
         })
         .catch(next)
 })
